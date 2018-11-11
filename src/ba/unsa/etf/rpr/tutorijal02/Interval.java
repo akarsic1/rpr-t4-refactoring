@@ -1,10 +1,12 @@
 package ba.unsa.etf.rpr.tutorijal02;
 
 public class Interval {
-    double pocetna, krajnja;
-    boolean a, b;
+    private double pocetna;
+    private double krajnja;
+    private boolean a;
+    private boolean b;
 
-    public boolean getA() {
+    private boolean getA() {
         return a;
     }
 
@@ -12,7 +14,7 @@ public class Interval {
         this.a = a;
     }
 
-    public boolean getB() {
+    private boolean getB() {
         return b;
     }
 
@@ -21,7 +23,7 @@ public class Interval {
     }
 
 
-    public double getKrajnja() {
+    private double getKrajnja() {
         return krajnja;
     }
 
@@ -29,7 +31,7 @@ public class Interval {
         this.krajnja = krajnja;
     }
 
-    public double getPocetna() {
+    private double getPocetna() {
         return pocetna;
     }
 
@@ -53,34 +55,31 @@ public class Interval {
     }
 
     public boolean isNull(){
-        if(pocetna == 0 && krajnja == 0) return true;
-        return false;
+        return pocetna == 0 && krajnja == 0;
     }
 
     public boolean isIn(double tacka){
-        if(tacka >= pocetna && tacka <= krajnja && a== true && b==true)return  true;
-        if(tacka > pocetna && tacka <= krajnja && a== false && b==true)return  true;
-        if(tacka >= pocetna && tacka < krajnja && a== true && b==false)return  true;
-        if(tacka > pocetna && tacka < krajnja && a== false && b==false)return  true;
-        return false;
+        if(tacka >= pocetna && tacka <= krajnja && a && b)return  true;
+        if(tacka > pocetna && tacka <= krajnja && !a && b)return  true;
+        if(tacka >= pocetna && tacka < krajnja && a && !b)return  true;
+        return tacka > pocetna && tacka < krajnja && !a && !b;
     }
 
     @Override
     public String toString(){
         String string_za_ispis = "";
-        if(a == true && b == true) string_za_ispis = ("["+pocetna+","+krajnja+"]");
-        if(a == false && b == true) string_za_ispis = ("("+pocetna+","+krajnja+"]");
-        if(a == true && b == false) string_za_ispis = ("["+pocetna+","+krajnja+")");
-        if(a == false && b == false) string_za_ispis = ("("+pocetna+","+krajnja+")");
-        if(getPocetna() == 0 && getKrajnja() == 0&& a == false && b == false)string_za_ispis ="()";
+        if(a && b) string_za_ispis = ("["+pocetna+","+krajnja+"]");
+        if(!a && b) string_za_ispis = ("("+pocetna+","+krajnja+"]");
+        if(a && !b) string_za_ispis = ("["+pocetna+","+krajnja+")");
+        if(!a && !b) string_za_ispis = ("("+pocetna+","+krajnja+")");
+        if(getPocetna() == 0 && getKrajnja() == 0&& !a && !b)string_za_ispis ="()";
         return string_za_ispis;
     }
 
     @Override
     public boolean equals(Object neko){
         Interval novi = (Interval) neko;
-        if(pocetna == novi.getPocetna() && krajnja == novi.getKrajnja() && a == novi.getA() && b == novi.getB())return  true;
-        return false;
+        return pocetna == novi.getPocetna() && krajnja == novi.getKrajnja() && a == novi.getA() && b == novi.getB();
     }
 
     public static Interval intersect(Interval prvi, Interval drugi){
